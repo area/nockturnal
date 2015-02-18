@@ -67,13 +67,18 @@ module.exports = function (name, options) {
             if (-1 === err.message.indexOf('no such file or directory')) {
                 console.error('Failed to load fixtures: ' + err + '. continuing by recording');
             }
-        }
-        if (!has_fixtures) {
+            has_features=false
             nock.recorder.rec({
-                dont_print: true,
-                output_objects: true
+              dont_print: true,
+              output_objects: true
             });
         }
+      } else {
+        has_fixtures=false;
+        nock.recorder.rec({
+          dont_print: true,
+          output_objects: true
+        });
       }
     },
     // saves our recording if fixtures didn't already exist
