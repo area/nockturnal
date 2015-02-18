@@ -20,7 +20,7 @@ module.exports = function (name, options) {
   };
   options = _.merge({}, defaults, options);
   var fix_file = path.join('.', options.folders.fixtures, name + '.json'),
-      has_fixtures = !!process.env.NOCK_RECORD, 
+      has_fixtures = !!process.env.NOCK_RECORD,
       make_fix_dir = function(fix_file) {
           var fix_dir = path.dirname(fix_file);
           if (!fs.existsSync(fix_dir)) {
@@ -65,13 +65,18 @@ module.exports = function (name, options) {
             if (-1 === err.message.indexOf('no such file or directory')) {
                 console.error('Failed to load fixtures: ' + err + '. continuing by recording');
             }
-        }
-        if (!has_fixtures) {
+            has_features=false
             nock.recorder.rec({
-                dont_print: true,
-                output_objects: true
+              dont_print: true,
+              output_objects: true
             });
         }
+      } else {
+        has_fixtures=false;
+        nock.recorder.rec({
+          dont_print: true,
+          output_objects: true
+        });
       }
     },
     // saves our recording if fixtures didn't already exist
