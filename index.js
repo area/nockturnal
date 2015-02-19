@@ -89,6 +89,7 @@ module.exports = function (name, options) {
             str_fixtures = str_fixtures.replace(re, place_holders[key]);
         });
         fs.writeFileSync(fix_file, str_fixtures, 'utf-8');
+        nock.restore();
       }
       done();
     }
